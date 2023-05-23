@@ -1,8 +1,9 @@
 # LAS FUNCIONES PRINCIPALES, OSEA LAS FUNCIONES QUE ESTAN EN EL MENU
+from funciones_generales import *
 
 def cargar_csv(path: str) -> list:
     """
-    Brief: Toma el archivo csv, lo  separa por lineas, crea una lista de diccionarios (cada insumo es un dict), itera la lista y en cada iteracion crea un diccionario
+    Brief: Toma el archivo csv, lo  separa por lineas, crea una lista de diccionarios (cada insumo es un dict), itera la lista y en cada iteracion crea un diccionario. Reutiliza la funcion normalizar_datos()
     
     Parameters:
         path: str -> el path del cvs que quiero pasar
@@ -12,26 +13,118 @@ def cargar_csv(path: str) -> list:
     if type(path) == type(str()):
         with open(path, "r", encoding="utf-8") as file:     # le pongo utf-8  porque  me tira  un error  "UnicodeDecodeError: 'charmap' codec can't decode byte 0x81 in position 2557: character maps to <undefined>"
             lista_lineas = []
-            lista_caracteristicas = []
             lista_insumos = []
             for linea in file:
                 linea = linea.replace("\n", "")               
                 lista_lineas = linea.split(",")
-                lista_caracteristicas = lista_lineas[4].split("~")
                 insumo = {}
                 insumo["id"] = lista_lineas[0]
                 insumo["nombre"] = lista_lineas[1]
                 insumo["marca"] = lista_lineas[2]
                 insumo["precio"] = lista_lineas[3]
-                insumo["caracteristicas"] = lista_caracteristicas
+                insumo["caracteristicas"] = lista_lineas[4]
                 #print(insumo)
                 lista_insumos.append(insumo)
+        lista_insumos = normalizar_datos(lista_insumos)
         return lista_insumos
 
+def listar_insumos_por_marca(lista_insumos:list, clave):
+    """
+    Brief: Muestra, para cada marca, el nombre y precio de los insumos correspondientes.
+    
+    Parameters: 
+        lista_insumos: list -> La lista que quiero utilizar
+    
+    Return: 
+    """
+    if(type(lista_insumos) == type([]) and type(clave) == type("") and len(lista_insumos) > 0):
+        lista_marcas = proyectar_clave(lista_insumos, clave)
+        
+        for marca in lista_marcas:
+            print(f"\n{marca}:")
+            for insumo in lista_insumos:
+                if insumo[clave] == marca:
+                    print("    Nombre: {0} | Precio: ${1}".format(insumo["nombre"], insumo["precio"]))
+
+def buscar_insumo_por_caracteristica(lista_insumos: list) -> list:
+    """
+    Brief: El usuario ingresa una caracteristica y se listan todos los insumos que tienen esa caracteristica
+    
+    Parameters:
+        lista_insumos: list -> La lista en la que quiero buscar esa caracteristica
+    
+    Return: Devuelve la lista con los elementos que tienen esa caracteristica
+            -1 si los parametros tienen algun error
+            un mensaje si la caracteristica no existe
+    """
+    lista_con_la_carac = []
+    flag_hay_carac = False
+    
+    if type(lista_insumos) == type([]) and len(lista_insumos) > 0:
+        carac_ingresada = input("Ingrese una caracteristica: ").lower()
+        
+        for insumo in lista_insumos:
+            if carac_ingresada in insumo["caracteristicas"]:
+                flag_hay_carac = True
+                lista_con_la_carac.append(insumo)
+        if flag_hay_carac:
+            retorno = lista_con_la_carac
+        else:
+            flag_hay_carac = True
+            retorno = "ERROR, caracteristica invalida"
+    else:
+        retorno = "-1"
+    
+    return retorno  
 
 
-
-
+def realizar_compras(lista_insumos: list):
+    """
+    Brief: va agregando los productos que el usuario desea a una lista y al final genera una factura en un archivo TXT. Reutiliza las funciones: encontrar_marca(), elegir_producto() y generar_factura_txt()
+    
+    Parameters: 
+        lista_insumos: list -> La lista de insumos completa
+        
+    Return: no retorna, genera la factura en el archivo TXT con las compras realizadas
+    """
+    respuesta = "s"
+    lista_compras = []
+    total = 0
+    
+    while respuesta == "s":
+        marca_ingresada = input("ingrese una marca: ").capitalize().strip()
+        productos_encontrados = encontrar_marca(lista_insumos, marca_ingresada)
+        
+        if type(productos_encontrados) == type(str()):
+            print(productos_encontrados)
+            continue # vuelve a pedir la marca
+        
+        print(productos_encontrados)
+        
+        id_producto_elegido = input("Ingrese el ID del producto que desea: ").lower().strip()
+        productos_encontrado = None
+        
+        for producto in productos_encontrados:
+            if id_producto_elegido == str(producto["id"]).lower().strip():
+                productos_encontrado = producto
+                break
+            
+        if productos_encontrado is None:
+            print("El ID ingresado no corresponde a un producto de la marca: {0}".format(marca_ingresada))
+            continue #vuelve a pedir la marca
+        
+        cantidad_producto_elegido = int(input("Ingrese la cantidad: "))
+        producto_elegido = elegir_producto(productos_encontrados, marca_ingresada,id_producto_elegido, cantidad_producto_elegido)
+        
+        if type(producto_elegido) == type({}):
+            lista_compras.append(producto_elegido)
+            total += float(producto_elegido["precio_total_del_producto"])
+        
+        respuesta = input("Para continuar: presione (s) \nPara finalizar: (otra tecla) \nRespuesta: ")
+        if respuesta != "s":
+            break
+    
+    generar_factura_txt(lista_compras, total)
 
 
 def imprimir_menu():
