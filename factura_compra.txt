@@ -1,0 +1,8 @@
+FACTURA DE LA COMPRA:
+--------------------------------
+Producto: Alimento para perros
+Precio por unidad: $12.99
+Cantidad: 3
+Precio total del producto: $38.97
+--------------------------------
+Total de la compra: $38.97

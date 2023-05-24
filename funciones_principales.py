@@ -1,5 +1,6 @@
 # LAS FUNCIONES PRINCIPALES, OSEA LAS FUNCIONES QUE ESTAN EN EL MENU
-from funciones_generales import *
+import json
+from funciones_secundarias import *
 
 def cargar_csv(path: str) -> list:
     """
@@ -28,14 +29,31 @@ def cargar_csv(path: str) -> list:
         lista_insumos = normalizar_datos(lista_insumos)
         return lista_insumos
 
-def listar_insumos_por_marca(lista_insumos:list, clave):
+def listar_cantidad_por_marcas(lista_insumos: list):
+    """
+    Brief: Muestra todas las marcas y la cantidad de insumos correspondientes a cada una
+    
+    Parameters:
+        lista_insumos: list -> La lista de la que quiero ver los datos
+    
+    Return: No retorna, imprime
+    """
+    cantidad_de_diferentes_marcas = {}
+    for insumo in lista_insumos:
+        cantidad_de_diferentes_marcas[insumo["marca"]] = 0
+    for insumo in lista_insumos:
+        cantidad_de_diferentes_marcas[insumo["marca"]] += 1
+    
+    print(cantidad_de_diferentes_marcas)
+# MEJORAR
+def listar_insumos_por_marca(lista_insumos:list, clave: str):
     """
     Brief: Muestra, para cada marca, el nombre y precio de los insumos correspondientes.
     
     Parameters: 
         lista_insumos: list -> La lista que quiero utilizar
     
-    Return: 
+    Return: Imprime el nombre y el precio
     """
     if(type(lista_insumos) == type([]) and type(clave) == type("") and len(lista_insumos) > 0):
         lista_marcas = proyectar_clave(lista_insumos, clave)
@@ -45,7 +63,7 @@ def listar_insumos_por_marca(lista_insumos:list, clave):
             for insumo in lista_insumos:
                 if insumo[clave] == marca:
                     print("    Nombre: {0} | Precio: ${1}".format(insumo["nombre"], insumo["precio"]))
-
+# AGREGAR BIEN LO DE LA CLAVE Y QUE NO SEA SOLO MARCA
 def buscar_insumo_por_caracteristica(lista_insumos: list) -> list:
     """
     Brief: El usuario ingresa una caracteristica y se listan todos los insumos que tienen esa caracteristica
@@ -77,6 +95,27 @@ def buscar_insumo_por_caracteristica(lista_insumos: list) -> list:
     
     return retorno  
 
+def listar_insumos_ordenados(lista_insumos: list):
+    """
+    Brief: Muestra el ID, descripción, precio, marca y la primera característica de todos los productos, ordenados por marca de forma ascendente (A-Z) y, ante marcas iguales, por precio descendente.
+
+    Parameters:
+        lista_insumos: list -> Lista que quiero ordenar
+        
+    Return: No retorna, imprime
+    """
+    lista_ordenada = bubble_sort_dict(lista_insumos, "marca", "precio")
+    for insumo in lista_ordenada:
+        print("""Id: {0}
+        Nombre: {1}
+        Precio: ${2}
+        Marca: {3}
+        Primer caracteristica: {4}
+---------------------------------------""". format(insumo["id"], 
+                    insumo["nombre"], 
+                    insumo["precio"], 
+                    insumo["marca"], 
+                    insumo["caracteristicas"][0], ))
 
 def realizar_compras(lista_insumos: list):
     """
@@ -114,18 +153,51 @@ def realizar_compras(lista_insumos: list):
             continue #vuelve a pedir la marca
         
         cantidad_producto_elegido = int(input("Ingrese la cantidad: "))
-        producto_elegido = elegir_producto(productos_encontrados, marca_ingresada,id_producto_elegido, cantidad_producto_elegido)
+        producto_elegido = elegir_producto(productos_encontrados, marca_ingresada, id_producto_elegido, cantidad_producto_elegido)
         
         if type(producto_elegido) == type({}):
             lista_compras.append(producto_elegido)
             total += float(producto_elegido["precio_total_del_producto"])
         
-        respuesta = input("Para continuar: presione (s) \nPara finalizar: (otra tecla) \nRespuesta: ")
+        respuesta = input("CONTINUAR: (s) \nFINALIZAR: (otra tecla) \nRespuesta: ")
         if respuesta != "s":
             break
-    
+        
     generar_factura_txt(lista_compras, total)
 
+def guardar_en_formato_json(lista_insumos):
+    """
+    Brief: Genera un archivo JSON con todos los productos cuyo nombre contiene la palabra "Alimento".
+    
+    Parameters:
+        lista:insumos: list -> La lista  sobre la que  quiero actuar
+    
+    Return: No retorna
+    """
+    # puedo agregar un parametro, qeu diga, si pretty es True que me lo escriba en formato lindo, y si es False, que me lo escriba como venga (IDEAS QUE PUEDO AGREGAR)
+    lista_nombre_alimento = []
+    for insumo in lista_insumos:
+        if "Alimento" in insumo["nombre"]:
+            lista_nombre_alimento.append(insumo)
+    
+    with open(r"C:\Users\luca_\Desktop\Parcial_lab_1\Parcial_lab_1\Punto_7_pretty.json", "w") as file:    # quiero dejar un poco mas prolijo la parte de caracteristicas, pero no se como hacer, VERLO DESPUES
+        json.dump(lista_nombre_alimento, file, indent=4)  #   primero el objeto(por ej, lista), despues en el archivo que quiero guardar, el indent es para dejar los espacios que quiero, el cuarto es separators, para separar por lo que quiero, ejemplo json.dump(lista_nombre_alimento, file, indent=4, separators = (", ", " : ")) le estoy diciendo que deje un espadio depues de cada coma
+
+def leer_desde_formato_json():
+    """
+    Brief: Permite mostrar un listado de los insumos guardados en el archivo JSON generado en la opción anterior.
+    
+    Parameters: No tiene
+
+    Return: No retorna, imprime la lista 
+    """
+    with open(r"C:\Users\luca_\Desktop\Parcial_lab_1\Parcial_lab_1\Punto_7_pretty.json", "r") as file:  # lo de pretty aca puedo hacer lo mismo 
+        lista = json.load(file)
+        print(lista)
+
+def actualizar_precios():
+    """
+    """
 
 def imprimir_menu():
     """

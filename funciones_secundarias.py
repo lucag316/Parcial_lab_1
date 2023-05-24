@@ -1,4 +1,14 @@
-# LAS FUNCIONES GENERALES, OSEA LAS QUE PUEDO USAR EN OTROS LUGARES( LE PUEDO PONER FUNCIONES SECUNDARIAS SINO)
+# LAS FUNCIONES GENERALES, OSEA LAS QUE PUEDO USAR EN OTROS LUGARES, ESTAN DENTRO DE LAS FUNCIONES PRINCIPALES
+
+def copiar_lista(lista: list) -> list:
+    """
+    Brief:
+    Parameters:
+    Return:
+    """
+    lista_copiada = []
+    lista_copiada = lista.copy()
+    return lista_copiada
 
 def normalizar_datos(lista: list) -> list:
     """
@@ -157,25 +167,30 @@ def proyectar_clave(lista_insumos: list, clave: str, con_repe: bool = False) -> 
 
 
 
-def bubble_sort_dict(lista: list, clave:str, flag_ascendente: bool = True) -> list:
+def bubble_sort_dict(lista: list, clave:str, clave_2:str, flag_ascendente: bool = True) -> list:
     """
-    Brief: Ordena la lista de diccionarios segun los parametros que le pases
+    Brief: Ordena la lista de diccionarios segun los parametros que le pases, si la primera clave empata, pasa a la segunda y la segunda se ordena de manera descendente, si las marcas son diferentes se ordena de la manera pasada por parametro
     
     Parameters:
         lista: list -> La lista que quiero ordenar
-        clave: str -> Por la  clave que lo quiero ordenar
-        flag_ascendente: bool -> Por defecto esta en  True, si quiero de manera descendente poner False
+        clave: str -> Por la clave que lo quiero ordenar
+        clave_2: str -> La segunda clave por la que quiero ordenar si la primera empata
+        flag_ascendente: bool -> Por defecto esta en True, si quiero de manera descendente poner False
     
-    Return: Devuelve la lista que le pasaste pero ordenada segundo los parametros que le pasaste
+    Return: Devuelve la lista que le pasaste pero ordenada segun los parametros que le pasaste
     """
     for i in range(len(lista) - 1):
         for j in range(i + 1, len(lista)):
-            if (flag_ascendente and lista[i][clave] > lista[j][clave]) or (flag_ascendente == False and lista[i][clave] < lista[j][clave]): # los mismo: not ascendente
+            if (lista[i][clave] == lista[j][clave]) and (lista[i][clave_2] < lista[j][clave_2]):
                     aux = lista[i]
                     lista[i] = lista[j]
-                    lista[j] = aux                 # para mi hacer una funcion de copiar lista
-    return lista                                    # no hace falta  retornar porque las listas son mutables, lo que pasa es que si primero hago esto, ya la lista original me cambio y queda asi
-
+                    lista[j] = aux
+            else:
+                if (flag_ascendente and lista[i][clave] > lista[j][clave]) or (flag_ascendente == False and lista[i][clave] < lista[j][clave]): # no se si es mejor usar un elif directamente
+                    aux = lista[i]                                                                                                              # podemos meter todo en un if como en el video del profe, pero lo entiendo mas asi
+                    lista[i] = lista[j]
+                    lista[j] = aux                      
+    return lista  
 
 #-------------------- 6
 def encontrar_marca(lista_insumos: list, marca_ingresada: str) -> list:
@@ -260,7 +275,7 @@ def generar_factura_txt(lista_compras: list, total: float):
     
     Return: no retorna nada, imprime si se genero correctamente y escribe en el archivo TXT la factura 
     """
-    with open(r"C:\Users\luca_\Desktop\Parcial\Parcial-lab-1\hola.txt", "w") as factura_txt:
+    with open(r"C:\Users\luca_\Desktop\Parcial_lab_1\Parcial_lab_1\factura_compra.txt", "w") as factura_txt:
         factura_txt.write("FACTURA DE LA COMPRA:\n")
         factura_txt.write("--------------------------------\n")
         
