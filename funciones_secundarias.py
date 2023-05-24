@@ -1,4 +1,6 @@
 # LAS FUNCIONES GENERALES, OSEA LAS QUE PUEDO USAR EN OTROS LUGARES, ESTAN DENTRO DE LAS FUNCIONES PRINCIPALES
+import csv
+import json
 
 def copiar_lista(lista: list) -> list:
     """
@@ -301,3 +303,31 @@ def aplicar_aumento(insumo: dict) -> dict:
     precio_con_aumento = float(insumo["precio"]) * 1.084
     insumo["precio"] = "{0:.2f}".format(precio_con_aumento)
     return insumo
+
+
+def guardar_csv(lista_actualizada: list, nombre_archivo: str):
+    """
+    Brief: Guarda la lista pasada por parametro en un archivo csv
+    
+    Parameters:
+        lista_actualizada: list -> La lista que quiero guardar
+        
+    Return: No retorna, guarda en otro archivo
+    """
+    with open(nombre_archivo, "w", newline="") as archivo_csv:
+        escribe = csv.writer(archivo_csv)
+        escribe.writerow(["ID", "NOMBRE", "MARCA", "PRECIO", "CARACTERISTICAS"])
+        for insumo in lista_actualizada:
+            escribe.writerow([insumo["id"], insumo["nombre"], insumo["marca"], insumo["precio"], insumo["caracteristicas"]])
+
+def guardar_json(lista_actualizada: list, nombre_archivo: str):
+    """
+    Brief: Guarda la lista pasada por parametro en un archivo json
+    
+    Parameters:
+        lista_actualizada: list -> La lista que quiero guardar
+        
+    Return: No retorna, guarda en otro archivo
+    """
+    with open(nombre_archivo, "w") as archivo_json:
+        json.dump(lista_actualizada, archivo_json, indent=4, ensure_ascii=False)

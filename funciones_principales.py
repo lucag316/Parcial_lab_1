@@ -218,6 +218,81 @@ def actualizar_precios(lista_insumos: list) -> list:
         for insumo in lista_con_aumento:
             escribe.writerow([insumo["id"], insumo["nombre"], insumo["marca"], insumo["precio"], insumo["caracteristicas"]])
 
+def agregar_producto(lista_insumos: list):
+    """
+    Brief: Agrega un producto a la lista pasada por parametro, el usuario va ingresando los datos del nuevo producto
+    
+    Parameters:
+        lista_insumos: list -> La lista a la que quiero agregarle el producto
+        
+    Return: no retorna, te avisa si el producto se agrego con exito, caso contrario te muestra error
+    """
+    marcas_disponibles = []
+    caracteristicas = []
+    nuevo_producto = {}
+    if type(lista_insumos) == type([]):
+        id = int(input("Ingrese el id del nuevo producto(mayor a 50): "))
+        if id > 50:
+            nombre = str(input("Ingrese el nombre del nuevo producto: "))
+            
+            with open(r"C:\Users\luca_\Desktop\Parcial_lab_1_Luca_Gargiulo\Parcial_lab_1_Luca_Gargiulo\marcas.txt", "r") as archivo_marcas:
+                for linea in archivo_marcas: 
+                    marca = linea.capitalize().strip()
+                    marcas_disponibles.append(marca)
+                    
+            print("MARCAS DISPONIBLES")
+            for marca_disponible in marcas_disponibles:
+                print(marca_disponible)
+                
+            marca = str(input("Ingrese una marca: ")).capitalize()
+            if esta_en_la_lista(marcas_disponibles, marca):
+                precio = float(input("Ingrese el precio del producto: "))
+                
+                if precio  > 0:
+                    caracteristicas_ingresadas = str(input("Ingrese las caracteristicas separadas por '~'(minimo 1, maximo 3): ")).lower().strip()
+                    
+                    if "~" in caracteristicas_ingresadas:
+                        caracteristicas = caracteristicas_ingresadas.split("~")
+                    else:
+                        caracteristicas = [caracteristicas_ingresadas]
+                    
+                    if len(caracteristicas) > 1 and len(caracteristicas) < 4:
+                        nuevo_producto = {
+                            "id": id,
+                            "nombre": nombre,
+                            "marca": marca,
+                            "precio": precio,
+                            "caracteristicas": caracteristicas}
+                        lista_insumos.append(nuevo_producto)
+                        print("El producto se agrego con exito")
+                    else:
+                        print("ERROR, no ingreso la cantidad disponible o no las separo en '~'")
+                else:
+                    print("El precio es invalido")
+            else:
+                print(f"La marca {marca} no esta disponible")
+        else:
+            print("Id invalido")
+
+def guardar_datos_actualizados(lista_actualizada: list):
+    """
+    Brief: Guarda la lista pasada por parametro en un archivo csv o json, segun el usuario elija. Reutiliza las funciones: guardar_csv() y guardar_json()
+    
+    Parameters:
+        lista_actualizada: list -> La lista que quiero guardar en otro archivo
+        
+    Return: No retorna, guarda la lista en otro archivo
+    """
+    lugar_guardado = input("Elija donde lo quiere guardar (csv/json): ").lower()
+    nombre_archivo = input("Ingrese el nombre del archivo: ").lower()
+
+    if lugar_guardado.lower() == "csv":
+        guardar_csv(lista_actualizada, nombre_archivo)
+        print("Los datos se han guardado en un CSV.")
+    elif lugar_guardado.lower() == "json":
+        guardar_json(lista_actualizada, nombre_archivo)
+        print("Los datos se han guardado en un JSON.")
+
 def imprimir_menu():
     """
     Brief: Imprime un menu de opciones
@@ -239,6 +314,8 @@ def imprimir_menu():
         7- Guardar en formato JSON
         8- Leer desde el formato JSON
         9- Actualizar precios
-        10 Salir del programa
+        10- Agregar producto
+        11- Guardar datos actualizados en JSON o CSV
+        12- Salir del programa
         =========================================
         """)

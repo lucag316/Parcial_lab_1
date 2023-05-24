@@ -11,7 +11,8 @@ def menu_principal():
     Return: No retorna, hace algo, segun la opcion que ingrese
     """
     flag_cargar_csv = False
-    opciones_validas = ["2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    flag_nuevo_produto_agregado = False
+    opciones_validas = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
     os.system("cls")
     
     while True:
@@ -50,6 +51,14 @@ def menu_principal():
                     actualizar_precios(lista_copiada)
                     pass
                 elif opcion == "10":
+                    agregar_producto(lista_copiada)
+                    flag_nuevo_produto_agregado = True
+                elif opcion == "11":
+                    if flag_nuevo_produto_agregado:
+                        guardar_datos_actualizados(lista_copiada)
+                    else:
+                        print("Primero debe usar el punto 10")
+                elif opcion == "12":
                     confirmacion = input("Esta seguro que quiere salir?\n(s) SALIR \n(otra tecla) CANCELAR \nRespuesta: ")
                     if confirmacion == "s":
                         break
@@ -63,4 +72,13 @@ def menu_principal():
 
 menu_principal()
 
+# 1. El programa deberá permitir agregar un nuevo producto a la lista (mediante una
+# nueva opción de menú).
+# Al momento de ingresar la marca del producto se deberá mostrar por pantalla un
+# listado con todas las marcas disponibles. Las mismas serán cargadas al programa
+# desde el archivo marcas.txt.
+# En cuanto a las características, se podrán agregar un mínimo de una y un máximo
+# de 3.
 
+# 2. Agregar una opción para guardar todos los datos actualizados (incluyendo las altas).
+# El usuario elegirá el tipo de formato de exportación: csv o json.
