@@ -90,7 +90,6 @@ def mostrar_lista_insumos(lista_insumos: list):
         print("ERROR, la lista esta vacia")
 
 
-#-------------- 3
 def esta_en_la_lista(lista: list, item: str) -> bool:
     """
     Brief: Te devuelve si el item esta o no esta en la lista de strings, NO de diccionarios
@@ -162,8 +161,6 @@ def proyectar_clave(lista_insumos: list, clave: str, con_repe: bool = False) -> 
     else:
         retorno = "-1"
     return retorno
-#---------------- 3
-
 
 
 def bubble_sort_dict(lista: list, clave:str, clave_2:str, flag_ascendente: bool = True) -> list:
@@ -191,7 +188,7 @@ def bubble_sort_dict(lista: list, clave:str, clave_2:str, flag_ascendente: bool 
                     lista[j] = aux                      
     return lista  
 
-#-------------------- 6
+
 def encontrar_marca(lista_insumos: list, marca_ingresada: str) -> list:
     """
     Brief: Busca la marca que pases por parametro, en la lista pasada por parametro
@@ -290,9 +287,8 @@ def generar_factura_txt(lista_compras: list, total: float):
         factura_txt.write(f"Total de la compra: ${total}\n")
         factura_txt.write("===================================\n")
         print("La factura se genero correctamente")
-#-------------------- 6
 
-#-------------------- 9
+
 def aplicar_aumento(insumo: dict) -> dict:
     """
     Brief: Aumenta 8.4% el valor de la clave precio al diccionario pasado por parametro
@@ -305,4 +301,3 @@ def aplicar_aumento(insumo: dict) -> dict:
     precio_con_aumento = float(insumo["precio"]) * 1.084
     insumo["precio"] = "{0:.2f}".format(precio_con_aumento)
     return insumo
-#-------------------- 9

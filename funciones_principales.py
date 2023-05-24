@@ -67,7 +67,7 @@ def listar_insumos_por_marca(lista_insumos:list, clave: str):
                 if insumo[clave] == marca:
                     print("    Nombre: {0} | Precio: ${1}".format(insumo["nombre"], insumo["precio"]))
             print("-------------------------------------")
-# AGREGAR BIEN LO DE LA CLAVE Y QUE NO SEA SOLO MARCA
+
 def buscar_insumo_por_caracteristica(lista_insumos: list) -> list:
     """
     Brief: El usuario ingresa una caracteristica y se listan todos los insumos que tienen esa caracteristica
@@ -217,7 +217,6 @@ def actualizar_precios(lista_insumos: list) -> list:
         escribe.writerow(["ID", "NOMBRE", "MARCA", "PRECIO", "CARACTERISTICAS"])
         for insumo in lista_con_aumento:
             escribe.writerow([insumo["id"], insumo["nombre"], insumo["marca"], insumo["precio"], insumo["caracteristicas"]])
-    #return lista_con_aumento
 
 def imprimir_menu():
     """
