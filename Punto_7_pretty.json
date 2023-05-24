@@ -1,68 +1,24 @@
 [
     {
-        "id": 15,
-        "nombre": "Alimento para perros",
-        "marca": "Blue buffalo",
-        "precio": 21.99,
-        "caracteristicas": [
-            "ingredientes naturales",
-            "sin granos",
-            "para razas peque\u00f1as"
-        ]
-    },
-    {
-        "id": 18,
-        "nombre": "Alimento para perros",
-        "marca": "Iams",
-        "precio": 14.5,
-        "caracteristicas": [
-            "control de peso",
-            "prote\u00ednas de calidad",
-            "sabor delicioso"
-        ]
-    },
-    {
-        "id": 45,
-        "nombre": "Alimento para perros",
-        "marca": "Merrick",
-        "precio": 23.99,
-        "caracteristicas": [
-            "ingredientes de calidad",
-            "sin granos",
-            "promueve una digesti\u00f3n saludable"
-        ]
-    },
-    {
-        "id": 25,
-        "nombre": "Alimento para perros",
-        "marca": "Nutro",
-        "precio": 17.99,
-        "caracteristicas": [
-            "ingredientes de calidad",
-            "sin conservantes artificiales",
-            "salud digestiva"
-        ]
-    },
-    {
-        "id": 32,
-        "nombre": "Alimento para perros",
-        "marca": "Pedigree",
-        "precio": 19.5,
-        "caracteristicas": [
-            "ingredientes naturales",
-            "sin granos",
-            "salud \u00f3ptima"
-        ]
-    },
-    {
         "id": 1,
         "nombre": "Alimento para perros",
         "marca": "Pedigree",
         "precio": 12.99,
         "caracteristicas": [
             "sabor delicioso",
-            "nutrici\u00f3n equilibrada",
+            "nutrición equilibrada",
             "contiene vitaminas y minerales"
+        ]
+    },
+    {
+        "id": 2,
+        "nombre": "Alimento para gatos",
+        "marca": "Purina one",
+        "precio": 9.99,
+        "caracteristicas": [
+            "alta calidad",
+            "proteínas de primera",
+            "promueve un pelaje saludable"
         ]
     },
     {
@@ -77,47 +33,36 @@
         ]
     },
     {
-        "id": 2,
-        "nombre": "Alimento para gatos",
-        "marca": "Purina one",
-        "precio": 9.99,
-        "caracteristicas": [
-            "alta calidad",
-            "prote\u00ednas de primera",
-            "promueve un pelaje saludable"
-        ]
-    },
-    {
-        "id": 29,
-        "nombre": "Alimento para gatos",
-        "marca": "Royal canin",
-        "precio": 24.99,
-        "caracteristicas": [
-            "f\u00f3rmula espec\u00edfica para razas",
-            "salud digestiva",
-            "pelo brillante"
-        ]
-    },
-    {
         "id": 11,
         "nombre": "Alimento para gatos",
         "marca": "Science diet",
         "precio": 16.99,
         "caracteristicas": [
-            "f\u00f3rmula equilibrada",
+            "fórmula equilibrada",
             "control de peso",
             "promueve la salud urinaria"
         ]
     },
     {
-        "id": 40,
-        "nombre": "Alimento para peces",
-        "marca": "Tetra",
-        "precio": 5.99,
+        "id": 15,
+        "nombre": "Alimento para perros",
+        "marca": "Blue buffalo",
+        "precio": 21.99,
         "caracteristicas": [
-            "variedad de sabores",
-            "alta calidad nutricional",
-            "para peces tropicales"
+            "ingredientes naturales",
+            "sin granos",
+            "para razas pequeñas"
+        ]
+    },
+    {
+        "id": 18,
+        "nombre": "Alimento para perros",
+        "marca": "Iams",
+        "precio": 14.5,
+        "caracteristicas": [
+            "control de peso",
+            "proteínas de calidad",
+            "sabor delicioso"
         ]
     },
     {
@@ -133,12 +78,67 @@
         ]
     },
     {
+        "id": 25,
+        "nombre": "Alimento para perros",
+        "marca": "Nutro",
+        "precio": 17.99,
+        "caracteristicas": [
+            "ingredientes de calidad",
+            "sin conservantes artificiales",
+            "salud digestiva"
+        ]
+    },
+    {
+        "id": 29,
+        "nombre": "Alimento para gatos",
+        "marca": "Royal canin",
+        "precio": 24.99,
+        "caracteristicas": [
+            "fórmula específica para razas",
+            "salud digestiva",
+            "pelo brillante"
+        ]
+    },
+    {
+        "id": 32,
+        "nombre": "Alimento para perros",
+        "marca": "Pedigree",
+        "precio": 19.5,
+        "caracteristicas": [
+            "ingredientes naturales",
+            "sin granos",
+            "salud óptima"
+        ]
+    },
+    {
+        "id": 40,
+        "nombre": "Alimento para peces",
+        "marca": "Tetra",
+        "precio": 5.99,
+        "caracteristicas": [
+            "variedad de sabores",
+            "alta calidad nutricional",
+            "para peces tropicales"
+        ]
+    },
+    {
+        "id": 45,
+        "nombre": "Alimento para perros",
+        "marca": "Merrick",
+        "precio": 23.99,
+        "caracteristicas": [
+            "ingredientes de calidad",
+            "sin granos",
+            "promueve una digestión saludable"
+        ]
+    },
+    {
         "id": 50,
         "nombre": "Alimento para perros",
         "marca": "Wellness core",
         "precio": 29.99,
         "caracteristicas": [
-            "alta prote\u00edna",
+            "alta proteína",
             "ingredientes naturales",
             "sin granos",
             "salud digestiva"

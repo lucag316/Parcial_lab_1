@@ -67,8 +67,7 @@ def mostrar_insumo(insumo: dict):
         Marca: {2}
         Precio: ${3}
         Carcarteristicas: {4}
-    --------------------------------------------------------------------------------------------
-        """.format(insumo["id"], insumo["nombre"], insumo["marca"], insumo["precio"], insumo["caracteristicas"]).strip())
+--------------------------------------------------------------------------------""".format(insumo["id"], insumo["nombre"], insumo["marca"], insumo["precio"], insumo["caracteristicas"]).strip())
     else:
         print("ERROR, el parametro no es de tipo diccionario")
 
@@ -276,8 +275,10 @@ def generar_factura_txt(lista_compras: list, total: float):
     Return: no retorna nada, imprime si se genero correctamente y escribe en el archivo TXT la factura 
     """
     with open(r"C:\Users\luca_\Desktop\Parcial_lab_1\Parcial_lab_1\factura_compra.txt", "w") as factura_txt:
-        factura_txt.write("FACTURA DE LA COMPRA:\n")
-        factura_txt.write("--------------------------------\n")
+        
+        factura_txt.write("===================================\n")
+        factura_txt.write("=      FACTURA DE LA COMPRA       =\n")
+        factura_txt.write("===================================\n")
         
         for producto in lista_compras:
             factura_txt.write(f"Producto: {producto['nombre']}\n")
@@ -285,7 +286,23 @@ def generar_factura_txt(lista_compras: list, total: float):
             factura_txt.write(f"Cantidad: {producto['cantidad']}\n")
             factura_txt.write(f"Precio total del producto: ${producto['precio_total_del_producto']}\n")
             factura_txt.write("--------------------------------\n")
-            
-        factura_txt.write(f"Total de la compra: ${total}")
+        factura_txt.write("===================================\n")
+        factura_txt.write(f"Total de la compra: ${total}\n")
+        factura_txt.write("===================================\n")
         print("La factura se genero correctamente")
 #-------------------- 6
+
+#-------------------- 9
+def aplicar_aumento(insumo: dict) -> dict:
+    """
+    Brief: Aumenta 8.4% el valor de la clave precio al diccionario pasado por parametro
+    
+    Parameters:
+        insumo: dict -> El diccionario del insumo que quiero aumentar
+        
+    Return: El diccioario con el aumento
+    """
+    precio_con_aumento = float(insumo["precio"]) * 1.084
+    insumo["precio"] = "{0:.2f}".format(precio_con_aumento)
+    return insumo
+#-------------------- 9

@@ -1,5 +1,6 @@
 # LAS FUNCIONES PRINCIPALES, OSEA LAS FUNCIONES QUE ESTAN EN EL MENU
 import json
+import csv
 from funciones_secundarias import *
 
 def cargar_csv(path: str) -> list:
@@ -38,14 +39,16 @@ def listar_cantidad_por_marcas(lista_insumos: list):
     
     Return: No retorna, imprime
     """
-    cantidad_de_diferentes_marcas = {}
+    diccionario_cantidades_marcas = {}
     for insumo in lista_insumos:
-        cantidad_de_diferentes_marcas[insumo["marca"]] = 0
-    for insumo in lista_insumos:
-        cantidad_de_diferentes_marcas[insumo["marca"]] += 1
-    
-    print(cantidad_de_diferentes_marcas)
-# MEJORAR
+        marca = insumo["marca"]
+        if marca in diccionario_cantidades_marcas:
+            diccionario_cantidades_marcas[marca] += 1
+        else:
+            diccionario_cantidades_marcas[marca] = 1
+    for marca, cantidad in diccionario_cantidades_marcas.items():
+        print(f"{marca}: {cantidad}")
+
 def listar_insumos_por_marca(lista_insumos:list, clave: str):
     """
     Brief: Muestra, para cada marca, el nombre y precio de los insumos correspondientes.
@@ -59,10 +62,11 @@ def listar_insumos_por_marca(lista_insumos:list, clave: str):
         lista_marcas = proyectar_clave(lista_insumos, clave)
         
         for marca in lista_marcas:
-            print(f"\n{marca}:")
+            print(f"\n{marca.upper()}:")
             for insumo in lista_insumos:
                 if insumo[clave] == marca:
                     print("    Nombre: {0} | Precio: ${1}".format(insumo["nombre"], insumo["precio"]))
+            print("-------------------------------------")
 # AGREGAR BIEN LO DE LA CLAVE Y QUE NO SEA SOLO MARCA
 def buscar_insumo_por_caracteristica(lista_insumos: list) -> list:
     """
@@ -138,7 +142,7 @@ def realizar_compras(lista_insumos: list):
             print(productos_encontrados)
             continue # vuelve a pedir la marca
         
-        print(productos_encontrados)
+        mostrar_lista_insumos(productos_encontrados)
         
         id_producto_elegido = input("Ingrese el ID del producto que desea: ").lower().strip()
         productos_encontrado = None
@@ -181,7 +185,8 @@ def guardar_en_formato_json(lista_insumos):
             lista_nombre_alimento.append(insumo)
     
     with open(r"C:\Users\luca_\Desktop\Parcial_lab_1\Parcial_lab_1\Punto_7_pretty.json", "w") as file:    # quiero dejar un poco mas prolijo la parte de caracteristicas, pero no se como hacer, VERLO DESPUES
-        json.dump(lista_nombre_alimento, file, indent=4)  #   primero el objeto(por ej, lista), despues en el archivo que quiero guardar, el indent es para dejar los espacios que quiero, el cuarto es separators, para separar por lo que quiero, ejemplo json.dump(lista_nombre_alimento, file, indent=4, separators = (", ", " : ")) le estoy diciendo que deje un espadio depues de cada coma
+        json.dump(lista_nombre_alimento, file, indent=4, ensure_ascii=False)  #   primero el objeto(por ej, lista), despues en el archivo que quiero guardar, el indent es para dejar los espacios que quiero, el cuarto es separators, para separar por lo que quiero, ejemplo json.dump(lista_nombre_alimento, file, indent=4, separators = (", ", " : ")) le estoy diciendo que deje un espadio depues de cada coma
+    print("JSON generado exitosamente")
 
 def leer_desde_formato_json():
     """
@@ -193,11 +198,26 @@ def leer_desde_formato_json():
     """
     with open(r"C:\Users\luca_\Desktop\Parcial_lab_1\Parcial_lab_1\Punto_7_pretty.json", "r") as file:  # lo de pretty aca puedo hacer lo mismo 
         lista = json.load(file)
-        print(lista)
+    print("Lista de insumos guardados en el archivo JSON")
+    mostrar_lista_insumos(lista)
 
-def actualizar_precios():
+def actualizar_precios(lista_insumos: list) -> list:
     """
+    Brief:  Aumento todos los precios de la lista de diccionarios pasada por parametro. Reutiliza la funcion: aplicar_aumento()
+    
+    Parameters:
+        lista_insumos: list -> La lista que deseo utilizar
+        
+    Return: Devuelve la lista con todos los precios aumentados
     """
+    lista_con_aumento = list(map(aplicar_aumento, lista_insumos))
+    
+    with open(r"C:\Users\luca_\Desktop\Parcial_lab_1\Parcial_lab_1\Insumos_modificado.csv", "w", newline="") as archivo_csv:
+        escribe = csv.writer(archivo_csv)
+        escribe.writerow(["ID", "NOMBRE", "MARCA", "PRECIO", "CARACTERISTICAS"])
+        for insumo in lista_con_aumento:
+            escribe.writerow([insumo["id"], insumo["nombre"], insumo["marca"], insumo["precio"], insumo["caracteristicas"]])
+    #return lista_con_aumento
 
 def imprimir_menu():
     """

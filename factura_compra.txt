@@ -1,8 +1,21 @@
-FACTURA DE LA COMPRA:
+===================================
+=      FACTURA DE LA COMPRA       =
+===================================
+Producto: Alimento para gatos
+Precio por unidad: $9.99
+Cantidad: 8
+Precio total del producto: $79.92
+--------------------------------
+Producto: Alimento para perros
+Precio por unidad: $19.5
+Cantidad: 5
+Precio total del producto: $97.5
 --------------------------------
 Producto: Alimento para perros
 Precio por unidad: $12.99
-Cantidad: 3
-Precio total del producto: $38.97
+Cantidad: 84
+Precio total del producto: $1091.16
 --------------------------------
-Total de la compra: $38.97
+===================================
+Total de la compra: $1268.5800000000002
+===================================

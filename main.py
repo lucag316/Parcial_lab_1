@@ -47,7 +47,7 @@ def menu_principal():
                     leer_desde_formato_json()
                     pass
                 elif opcion == "9":
-                    actualizar_precios()
+                    actualizar_precios(lista_copiada)
                     pass
                 elif opcion == "10":
                     confirmacion = input("Esta seguro que quiere salir?\n(s) SALIR \n(otra tecla) CANCELAR \nRespuesta: ")
@@ -66,6 +66,6 @@ menu_principal()
 
 
 # 4 MEJORAR COMO SE VE, mostrar_insumo
-# 6 cuando ingreso una marca,  hacer que se vean mejor
-# 7 se me queda guardada la lista como la modifique si ya la use, creo que tengo que usar una copia para los demas puntos
-# 8 cuando lo leo hacer que  se vea mas lindo
+# 6 cuando ingreso una marca,  hacer que se vean mejor (se puede mejorar pero mas o menos ya esta), CUANDO INGRESO CUALQUIER CANTIDAD ME SIGUE DEJANDO Y DESPUES NO ME APARECE EL PRECIO
+# 7 se me queda guardada la lista como la modifique si ya la use, creo que tengo que usar una copia para los demas puntos (uso la lista copiada, no se si esta bien)
+# 8 cuando lo leo hacer que se vea mas lindo (ya lo modifique, puede quedar mejor)
